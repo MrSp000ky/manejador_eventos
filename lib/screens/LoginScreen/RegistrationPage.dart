@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
+import 'package:manejador_eventos/utils/auth.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -15,15 +16,20 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageStateState extends State<RegistrationPage> {
-  late String email,password,name;
+
+  final AuthService _auth = AuthService();
+
+  late String email = '',password = '',name = '';
   final _formkey=GlobalKey<FormState>();
+
   @override
   void initState(){
-super.initState();
+  super.initState();
   }
+
+
+  
   @override
-
-
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
@@ -49,6 +55,8 @@ super.initState();
       ),
     );
   }
+
+
   Widget formulario(){
     return Form(
       key: _formkey,
@@ -64,6 +72,8 @@ super.initState();
           
     ],));
   }
+
+
   Widget buildEmail(){
 return TextFormField(
   decoration: InputDecoration(
@@ -85,8 +95,11 @@ return TextFormField(
     return "Es obligatorio llenar el campo pa";
   }
   return null;
-}, );
+    }, 
+  );
 }
+
+
 Widget buildPassword(){
   return TextFormField(
     decoration: InputDecoration(
@@ -111,24 +124,66 @@ onSaved: (String? value){
   );
 
   }
+
+
 Widget butonRegister(){
-return ElevatedButton(onPressed: (){
-  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MenuPage()), (route) => false);
+return ElevatedButton(onPressed: ()async{
+
+  if(_formkey.currentState?.validate()==true){
+
+    _formkey.currentState?.save();
+    print(email);
+    print(password);
+    
+    var result = await _auth.createAccount(email, password);
+
+    if (result == 1) {
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Contraseña debil.'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('La Contraseña ingresada es demasiado debil.'),
+        )
+        );
+    } else if (result == 2){
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Email en uso.'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('Ese email ya esta registrado.'),
+        )
+        );
+    } else if (result != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MenuPage()), (route) => false);
+    }
+
+
+
+
+  }
+
+
   //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
   
 }, 
-child: Text("registrar"),
+child: const Text("Registrar Cuenta"),
 );
 }
+
+
 Widget buildName(){
 return TextFormField(
   decoration: InputDecoration(
     labelText: "nombre de usuario",
     border: OutlineInputBorder(
-      borderRadius: new BorderRadius.circular(8),
-      borderSide:  new BorderSide(color: Colors.black)
+      borderRadius: BorderRadius.circular(8),
+      borderSide:  const BorderSide(color: Colors.black)
     )
-
   ),
   keyboardType: TextInputType.name,
   

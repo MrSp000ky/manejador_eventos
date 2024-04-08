@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
 import 'package:manejador_eventos/screens/LoginScreen/RegistrationPage.dart';
+import "package:firebase_core/firebase_core.dart";
+import 'package:manejador_eventos/utils/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,7 +15,12 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  late String email,password;
+
+
+  final AuthService _auth = AuthService();
+
+
+  late String email = '',password = '';
   final _formkey=GlobalKey<FormState>();
   @override
   void initState(){
@@ -112,9 +119,44 @@ onSaved: (String? value){
   }
 Widget butonLogin()
 {
-return ElevatedButton(onPressed: (){
-  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => MenuPage()), (route) => false);
-  //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
+return ElevatedButton(onPressed: ()async{
+  if(_formkey.currentState?.validate()==true){
+
+    _formkey.currentState?.save();
+    print(email);
+    print(password);
+    
+    var result = await _auth.signInEmailAndPassword(email, password);
+
+    if (result == 1) {
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Usuario/Password invalido'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('Error en el usuario y password'),
+        )
+        );
+    } else if (result == 2){
+      showDialog(
+        // ignore: use_build_context_synchronously
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Usuario/Password invalido'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('Error en el usuario y password'),
+        )
+        );
+    } else if (result != null) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MenuPage()), (route) => false);
+    }
+
+
+
+
+  }  //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
   
 }, 
 child: Text("login"),
