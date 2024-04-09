@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
+import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
 import 'package:manejador_eventos/utils/auth.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -44,14 +45,20 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
               //Image(image: AssetImage(""),),
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('regitration page ',style: TextStyle(color: Colors.black,fontSize: 20),),
+                child: Text('Registrar Usuario ',style: TextStyle(color: Colors.black,fontSize: 20),),
               ),
               Padding(padding: const EdgeInsets.all(8.0),
               child: formulario(),
               ),
               butonRegister(),
             ],
-        )
+        ),
+      floatingActionButton: FloatingActionButton(
+        tooltip: 'Volver a pantalla de Login',
+        onPressed: (){
+            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+
+        },child: const Icon(Icons.arrow_back)),  
       ),
     );
   }
@@ -61,13 +68,13 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
     return Form(
       key: _formkey,
         child: Column(children: [
-          const Text('nombre usuario'),
+          const Text('UserName'),
           const Padding(padding: EdgeInsets.only(top:12)),
           buildName(),
           const Text('Correo'),
           buildEmail(),
           const Padding(padding: EdgeInsets.only(top: 12)),
-          const Text('contraseña'),
+          const Text('Contraseña'),
           buildPassword(),const Padding(padding: EdgeInsets.only(top: 12)),
           
     ],));
@@ -179,7 +186,7 @@ child: const Text("Registrar Cuenta"),
 Widget buildName(){
 return TextFormField(
   decoration: InputDecoration(
-    labelText: "nombre de usuario",
+    labelText: "UserName",
     border: OutlineInputBorder(
       borderRadius: BorderRadius.circular(8),
       borderSide:  const BorderSide(color: Colors.black)

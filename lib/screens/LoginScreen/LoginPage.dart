@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
 import 'package:manejador_eventos/screens/LoginScreen/RegistrationPage.dart';
-import "package:firebase_core/firebase_core.dart";
 import 'package:manejador_eventos/utils/auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -33,7 +32,7 @@ super.initState();
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: Text('login'),
+          title: const Text('Event Manager App'),
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         ),
         body: Column(
@@ -44,7 +43,7 @@ super.initState();
               //Image(image: AssetImage(""),),
               const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('login page',style: TextStyle(color: Colors.black,fontSize: 20),),
+                child: Text('LogIn',style: TextStyle(color: Colors.black,fontSize: 20),),
               ),
               Padding(padding: const EdgeInsets.all(8.0),
               child: formulario(),
@@ -60,10 +59,10 @@ super.initState();
     return Form(
       key: _formkey,
         child: Column(children: [
-          Text('Correo'),
+          const Text('Correo'),
           buildEmail(),
           const Padding(padding: EdgeInsets.only(top: 12)),
-          Text('contraseña'),
+          const Text('Contraseña'),
           buildPassword(),
     ],));
   }
@@ -72,8 +71,8 @@ return TextFormField(
   decoration: InputDecoration(
     labelText: "Correo",
     border: OutlineInputBorder(
-      borderRadius: new BorderRadius.circular(8),
-      borderSide:  new BorderSide(color: Colors.black)
+      borderRadius:  BorderRadius.circular(8),
+      borderSide:  const BorderSide(color: Colors.black)
     )
 
   ),
@@ -98,8 +97,8 @@ Widget buildPassword(){
     decoration: InputDecoration(
     labelText: "Contraseña",
     border: OutlineInputBorder(
-      borderRadius: new BorderRadius.circular(8),
-      borderSide:  new BorderSide(color: Colors.black)
+      borderRadius:  BorderRadius.circular(8),
+      borderSide:   const BorderSide(color: Colors.black)
     )
 
   ),
@@ -127,51 +126,38 @@ return ElevatedButton(onPressed: ()async{
     print(password);
     
     var result = await _auth.signInEmailAndPassword(email, password);
-
-    if (result == 1) {
+    print(result);
+    if (result == 1 || result == 2 || result == null) {
       showDialog(
         // ignore: use_build_context_synchronously
         context: context, 
         builder: (context)=> const AlertDialog(
           title: Text('Usuario/Password invalido'),
           icon: Icon(Icons.password_sharp),
-          content: Text('Error en el usuario y password'),
-        )
-        );
-    } else if (result == 2){
-      showDialog(
-        // ignore: use_build_context_synchronously
-        context: context, 
-        builder: (context)=> const AlertDialog(
-          title: Text('Usuario/Password invalido'),
-          icon: Icon(Icons.password_sharp),
-          content: Text('Error en el usuario y password'),
+          content: Text('Error en el usuario y/o password'),
         )
         );
     } else if (result != null) {
       // ignore: use_build_context_synchronously
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MenuPage()), (route) => false);
     }
-
-
-
-
   }  //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
-  
 }, 
-child: Text("login"),
+child: const Text("LogIn"),
 );
+
+
 }
 Widget TextRegister(){
   return Row(
     
     children: [
-      Text('eres nuevo?'),
+     const Text('¿Eres nuevo?'),
       TextButton(onPressed: (){
       Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
       
         
-      }, child: Text('registrate aqui pa ')),
+      }, child: const Text('¡Registrate aqui! ')),
     ],
   );
 }

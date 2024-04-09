@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, });
@@ -27,7 +28,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("MENU PARA LOS EVENTOS "),
+        title: const Text("MENU PARA LOS EVENTOS PROXIMAMENTE"),
       ),
       
       body: Center(
@@ -35,7 +36,7 @@ class _MenuPageState extends State<MenuPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              'Menu Items para Event Manager',
             ),
             Text(
               '$_counter',
@@ -44,10 +45,20 @@ class _MenuPageState extends State<MenuPage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      floatingActionButton: Column(
+         mainAxisAlignment: MainAxisAlignment.end, 
+        crossAxisAlignment: CrossAxisAlignment.end, 
+        children: [
+          FloatingActionButton(
+            elevation: 6,
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            onPressed: (){
+              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+          },
+            child: const Icon(Icons.logout_sharp)
+            ), 
+        ],
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
