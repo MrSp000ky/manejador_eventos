@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
 import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
-import 'package:manejador_eventos/utils/auth.dart';
+import 'package:manejador_eventos/controller/auth_controller/auth.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -35,23 +35,25 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Registro'),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('Event Manager App'),
+          backgroundColor: Colors.tealAccent.shade700,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-            children: [
-              //Image(image: AssetImage(""),),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Registrar Usuario ',style: TextStyle(color: Colors.black,fontSize: 20),),
-              ),
-              Padding(padding: const EdgeInsets.all(8.0),
-              child: formulario(),
-              ),
-              butonRegister(),
-            ],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+              children: [
+                //Image(image: AssetImage(""),),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('Registrar Usuario ',style: TextStyle(color: Colors.black,fontSize: 20),),
+                ),
+                Padding(padding: const EdgeInsets.all(8.0),
+                child: formulario(),
+                ),
+                butonRegister(),
+              ],
+          ),
         ),
       floatingActionButton: FloatingActionButton(
         tooltip: 'Volver a pantalla de Login',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/firebase_options.dart';
+import 'package:manejador_eventos/config/firebase/firebase_options.dart';
 import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
 import 'package:firebase_core/firebase_core.dart';
 

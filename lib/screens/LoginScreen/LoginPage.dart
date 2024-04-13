@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/screens/menu/MenuPage.dart';
 import 'package:manejador_eventos/screens/LoginScreen/RegistrationPage.dart';
-import 'package:manejador_eventos/utils/auth.dart';
+import 'package:manejador_eventos/controller/auth_controller/auth.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -25,36 +25,40 @@ class _LoginPageState extends State<LoginPage> {
   void initState(){
 super.initState();
   }
+
+
   @override
-
-
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Event Manager App'),
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Colors.tealAccent.shade700
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.max,
-            children: [
-              //logo que pondremos de la aplicacion 
-              //Image(image: AssetImage(""),),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('LogIn',style: TextStyle(color: Colors.black,fontSize: 20),),
-              ),
-              Padding(padding: const EdgeInsets.all(8.0),
-              child: formulario(),
-              ),
-              butonLogin(),
-              TextRegister(),
-            ],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+              children: [
+                //logo que pondremos de la aplicacion 
+                //Image(image: AssetImage(""),),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Text('LogIn',style: TextStyle(color: Colors.black,fontSize: 20),),
+                ),
+                Padding(padding: const EdgeInsets.all(8.0),
+                child: formulario(),
+                ),
+                butonLogin(),
+                TextRegister(),
+              ],
+          ),
         )
       ),
     );
   }
+
+
   Widget formulario(){
     return Form(
       key: _formkey,
@@ -66,6 +70,9 @@ super.initState();
           buildPassword(),
     ],));
   }
+
+
+
   Widget buildEmail(){
 return TextFormField(
   decoration: InputDecoration(
