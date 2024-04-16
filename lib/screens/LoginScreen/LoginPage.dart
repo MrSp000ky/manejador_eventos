@@ -81,12 +81,8 @@ return TextFormField(
       borderRadius:  BorderRadius.circular(8),
       borderSide:  const BorderSide(color: Colors.black)
     )
-
   ),
-
-
   keyboardType: TextInputType.emailAddress,
-  
   onSaved: (String? value){
     email= value!;
   },
@@ -97,8 +93,9 @@ return TextFormField(
   }
   return null;
 }, );
-
 }
+
+
 Widget buildPassword(){
   return TextFormField(
     decoration: InputDecoration(
@@ -141,7 +138,7 @@ return ElevatedButton(onPressed: ()async{
         builder: (context)=> const AlertDialog(
           title: Text('Usuario/Password invalido'),
           icon: Icon(Icons.password_sharp),
-          content: Text('Error en el usuario y/o password'),
+          content: Text('Intente Denuevo'),
         )
         );
     } else if (result != null) {

@@ -40,7 +40,7 @@ class AuthService{
     
   } on FirebaseAuthException catch(e){
     
-      if (e.code == 'user-not-found') {
+      if (e.code == 'invalid-credential') {
         return 1;
       }else if (e.code == 'wrong-password') {
         return 2;
