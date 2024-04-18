@@ -17,8 +17,7 @@ class _MenuPageState extends State<MenuPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  Colors.tealAccent.shade700,
-        title: const Text("MENU "),
-        
+        title: const Text("Menu Principal"),
       ),
       body: Center(
         child: Column(

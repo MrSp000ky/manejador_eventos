@@ -20,6 +20,8 @@ class PasswordInput extends StatelessWidget {
       validator: (value) {
         if (value!.isEmpty) {
           return "Es obligatorio llenar el campo";
+        }else if(value.length<5){
+          return "La contraseña debe tener 5 caracteres o mas.";
         }
         return null;
       },

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:manejador_eventos/screens/widgets/event_creation_form.dart';
 class CreationEventPage extends StatefulWidget {
   const CreationEventPage({super.key});
   @override
@@ -30,12 +31,12 @@ class _CreationEventPage extends State<CreationEventPage> {
       child: SizedBox(
         child: Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-          title: const Text('creation event'),
+          backgroundColor: Colors.cyan,
+          title: const Text('Creacion de Evento'),
         ),
-        body: SingleChildScrollView(
+        body: const SingleChildScrollView(
           child: Column(children: [  
-            formulario(),
+            EventCreationForm(),
             ]
           ),
         ),
@@ -57,189 +58,4 @@ class _CreationEventPage extends State<CreationEventPage> {
     );
   }
 }
-Widget formulario(){
-    return Form(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "nombre del evento",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "tipo de evento",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "descripcion",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "ubicacion",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "fecha",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "hora de inicio",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "hora de fin",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                TextFormField(
-                  decoration: InputDecoration(
-                      labelText: "aforo",
-                      border: OutlineInputBorder(
-                      borderRadius:  BorderRadius.circular(5),
-                      borderSide:  const BorderSide(color: Colors.black)
-                  )
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 12)),
-                ],
-                ),
-          )
-          );
-    
-  }
 
-Widget BuildnameEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "nombre del evento",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(5),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-);
-}
-Widget buidldesciptionEvent(){
-  return TextFormField(
-      decoration: InputDecoration(
-        labelText: "Descripcion",
-        border: OutlineInputBorder(
-          borderRadius:  BorderRadius.circular(8),
-          borderSide:  const BorderSide(color: Colors.black),
-        )
-      ),
-      );
-}
-Widget buidlTipeEvent(){
-  return 
-      TextFormField(
-      decoration: InputDecoration(
-        labelText: "Tipo de evento",
-        border: OutlineInputBorder(
-          borderRadius:  BorderRadius.circular(8),
-          borderSide:  const BorderSide(color: Colors.black),
-        )
-      ),
-      );
-}
-Widget BuildlLocationEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "ubicacion",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-
-);
-}
-Widget BuildldateEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "fecha",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-
-);
-}
-Widget BuildlhourStartEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "hora de inicio",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-);
-}
-Widget BuildlhourEndEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "hora de  fin",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-);
-}
-Widget BuildlCapacityEvent(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "aforo",
-    border: OutlineInputBorder(
-      borderRadius:  BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-
-);
-}
