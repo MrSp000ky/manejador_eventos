@@ -1,65 +1,76 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, });
- 
 
   @override
   State<MenuPage> createState() => _MenuPageState();
 }
 
 class _MenuPageState extends State<MenuPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  final double sizedBoxHeight = 20;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context)
+  {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text("MENU PARA LOS EVENTOS PROXIMAMENTE"),
+        backgroundColor:  Colors.tealAccent.shade700,
+        title: const Text("MENU "),
+        
       ),
-      
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            const Text(
-              'Menu Items para Event Manager',
+          SizedBox(
+            height: sizedBoxHeight,
+          ),
+          ListTile(
+            title: const Text('Creacion de evento'),
+            subtitle: const Text('proximamente'),
+            tileColor: Colors.cyan,
+            onTap: () => context.go('/creation-event'),
+          ),
+           SizedBox(
+            height: sizedBoxHeight,
+          ),
+          ListTile(
+            title: const Text('Ver eventos'),
+            subtitle: const Text('proximamente'),
+            tileColor: Colors.red,
+            onTap:() => context.go('/view-event'),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            SizedBox(
+            height: sizedBoxHeight,
+          ),
+            ListTile(
+            title: const Text('Editar eventos'),
+            subtitle: const Text('proximamente'),
+            tileColor: Colors.orange,
+            onTap:() => context.go('/view-event'),
+            )
           ],
         ),
       ),
+      
       floatingActionButton: Column(
-         mainAxisAlignment: MainAxisAlignment.end, 
+        mainAxisAlignment: MainAxisAlignment.end, 
         crossAxisAlignment: CrossAxisAlignment.end, 
         children: [
           FloatingActionButton(
+            tooltip: "Cerrar Sesion",
             elevation: 6,
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             onPressed: (){
-              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+              context.go('/login-page');
           },
             child: const Icon(Icons.logout_sharp)
             ), 
         ],
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ), 
     );
   }
 }

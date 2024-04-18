@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/menu/MenuPage.dart';
-import 'package:manejador_eventos/screens/LoginScreen/RegistrationPage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
 import 'package:manejador_eventos/screens/widgets/login_register_form.dart';
 
@@ -75,11 +74,7 @@ void _validateLogin(String email, String password) async {
         ),
       );
     } else if (result != null) {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (context) => const MenuPage()),
-        (route) => false,
-      );
+      context.go('/menu-page');
     }
   }
 
@@ -88,7 +83,7 @@ Widget TextRegister(){
     children: [
      const Text('¿Eres nuevo?'),
       TextButton(onPressed: (){
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const RegistrationPage()), (route) => false);   
+      context.go('/new-user');  
       }, child: const Text('¡Registrate aqui! ')),
       ],
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:manejador_eventos/config/firebase/firebase_options.dart';
-import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
+import 'package:manejador_eventos/config/router/app_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 Future<void> main() async{
@@ -27,10 +27,10 @@ class _MyAppState extends State<MyApp>{
   }
   @override
   Widget build(BuildContext context) {
-  return const MaterialApp(
+  return MaterialApp.router(
     debugShowCheckedModeBanner: false,
-    title: "manejador de eventos",
-    home: LoginPage(),
+    title: "Manejador de Eventos",
+    routerConfig: appRouter,
 
   ) ;
   }

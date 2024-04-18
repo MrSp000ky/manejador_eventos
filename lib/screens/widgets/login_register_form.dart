@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:manejador_eventos/screens/widgets/login_register_custom_fields/email_input.dart';
 import 'package:manejador_eventos/screens/widgets/login_register_custom_fields/password_input.dart';
 
@@ -25,14 +26,17 @@ class _LoginFormState extends State<LoginRegisterForm> {
       key: _formKey,
       child: Column(
         children: [
-          const Text('Correo'),
           Email_Input(
             onChanged: (value) => email = value,
           ),
-          const Padding(padding: EdgeInsets.only(top: 12)),
-          const Text('Contraseña'),
+          const SizedBox(
+            height: 10,
+          ),
           PasswordInput(
             onChanged: (value) => password = value,
+          ),
+          const SizedBox(
+            height: 10,
           ),
           ElevatedButton(
             onPressed: () {

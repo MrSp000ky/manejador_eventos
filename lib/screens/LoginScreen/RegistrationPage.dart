@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
 import 'package:manejador_eventos/screens/widgets/login_register_form.dart';
 
@@ -57,8 +57,7 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Volver a pantalla de Login',
         onPressed: (){
-            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-
+            context.go('/login-page');
         },child: const Icon(Icons.arrow_back)),  
       ),
     );
@@ -103,7 +102,7 @@ void _validateRegister(String email , String password) async {
         )
         );
       await Future.delayed(const Duration(seconds: 4));
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginPage()), (route) => false);
+      context.go('/login-page');
     }
   
 }
