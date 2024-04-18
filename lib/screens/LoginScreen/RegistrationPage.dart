@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/menu/MenuPage.dart';
 import 'package:manejador_eventos/screens/LoginScreen/LoginPage.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
+import 'package:manejador_eventos/screens/widgets/login_register_form.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -21,15 +21,13 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
   final AuthService _auth = AuthService();
 
   late String email = '',password = '',name = '';
-  final _formkey=GlobalKey<FormState>();
+ 
 
   @override
   void initState(){
   super.initState();
   }
 
-
-  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -49,9 +47,10 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
                   child: Text('Registrar Usuario ',style: TextStyle(color: Colors.black,fontSize: 20),),
                 ),
                 Padding(padding: const EdgeInsets.all(8.0),
-                child: formulario(),
-                ),
-                butonRegister(),
+                child: LoginRegisterForm(
+                  onLogin: _validateRegister, 
+                  buttonName: "Registrar Cuenta")
+                )
               ],
           ),
         ),
@@ -66,81 +65,7 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
   }
 
 
-  Widget formulario(){
-    return Form(
-      key: _formkey,
-        child: Column(children: [
-          const Text('UserName'),
-          const Padding(padding: EdgeInsets.only(top:12)),
-          buildName(),
-          const Text('Correo'),
-          buildEmail(),
-          const Padding(padding: EdgeInsets.only(top: 12)),
-          const Text('Contraseña'),
-          buildPassword(),const Padding(padding: EdgeInsets.only(top: 12)),
-          
-    ],));
-  }
-
-
-  Widget buildEmail(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "Correo",
-    border: OutlineInputBorder(
-      borderRadius: new BorderRadius.circular(8),
-      borderSide:  new BorderSide(color: Colors.black)
-    )
-
-  ),
-  keyboardType: TextInputType.emailAddress,
-  
-  onSaved: (String? value){
-    email= value!;
-  },
-  validator:(value){
-  if(value!.isEmpty)
-  {
-    return "Es obligatorio llenar el campo pa";
-  }
-  return null;
-    }, 
-  );
-}
-
-
-Widget buildPassword(){
-  return TextFormField(
-    decoration: InputDecoration(
-    labelText: "Contraseña",
-    border: OutlineInputBorder(
-      borderRadius: new BorderRadius.circular(8),
-      borderSide:  new BorderSide(color: Colors.black)
-    )
-
-  ),
-obscureText: true,
-validator:(value){
-  if(value!.isEmpty)
-  {
-    return "Es obligatorio llenar el campo pa";
-  }
-  return null;
-},
-onSaved: (String? value){
-    password= value!;
-  },
-  );
-
-  }
-
-
-Widget butonRegister(){
-return ElevatedButton(onPressed: ()async{
-
-  if(_formkey.currentState?.validate()==true){
-
-    _formkey.currentState?.save();
+void _validateRegister(String email , String password) async {
     print(email);
     print(password);
     
@@ -148,7 +73,7 @@ return ElevatedButton(onPressed: ()async{
 
     if (result == 1) {
       showDialog(
-        // ignore: use_build_context_synchronously
+        
         context: context, 
         builder: (context)=> const AlertDialog(
           title: Text('Contraseña debil.'),
@@ -158,7 +83,7 @@ return ElevatedButton(onPressed: ()async{
         );
     } else if (result == 2){
       showDialog(
-        // ignore: use_build_context_synchronously
+        
         context: context, 
         builder: (context)=> const AlertDialog(
           title: Text('Email en uso.'),
@@ -167,44 +92,20 @@ return ElevatedButton(onPressed: ()async{
         )
         );
     } else if (result != null) {
-      // ignore: use_build_context_synchronously
-      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const MenuPage()), (route) => false);
+      
+      showDialog(
+        
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Su cuenta se creo exitosamente!'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('Ahora inicie sesion con su cuenta'),
+        )
+        );
+      await Future.delayed(const Duration(seconds: 4));
+      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const LoginPage()), (route) => false);
     }
-
-
-
-
-  }
-
-
-  //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => RegistrationPage()), (route) => false);
   
-}, 
-child: const Text("Registrar Cuenta"),
-);
 }
 
-
-Widget buildName(){
-return TextFormField(
-  decoration: InputDecoration(
-    labelText: "UserName",
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(8),
-      borderSide:  const BorderSide(color: Colors.black)
-    )
-  ),
-  keyboardType: TextInputType.name,
-  
-  onSaved: (String? value){
-    name= value!;
-  },
-  validator:(value){
-  if(value!.isEmpty)
-  {
-    return "Es obligatorio llenar el campo pa";
-  }
-  return null;
-}, );
-}
 }
