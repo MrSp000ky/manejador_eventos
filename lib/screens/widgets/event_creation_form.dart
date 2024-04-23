@@ -31,11 +31,7 @@ class _MyWidgetState extends State<EventCreationForm> {
                   onChanged: (value) => nameEvent=value
                 ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
-                Type_Event(
-                  selectedType: 'Tipo evento 1', 
-                  types: const ['Tipo evento 1', 'Tipo evento 2', 'Tipo evento 3', 'Tipo evento 4'],
-                  onChanged: (String? newValue){typeEvent=newValue!;},
-                  ),
+                Type_Event(),
                 const Padding(padding: EdgeInsets.only(top: 12)),
                 Description_Input(
                   onChanged: (value) => description=value
