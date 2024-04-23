@@ -10,17 +10,15 @@ class CreationEventPage extends StatefulWidget {
 } 
 }
 class _CreationEventPage extends State<CreationEventPage> {
-
-  late String title= '';
-  // ignore: unused_field
+// ignore: unused_field
   final _formkey=GlobalKey<FormState>();
-
-  //final String ?typeEvent;
-  //final String ?description;
-  //final String ?location;
-  //final String ?date;
-  //final String ?hourStar;
-  // final String ?hourEnd;
+  late String title= '';
+  late String typeEvent='';
+  late String description='';
+  late String location='';
+  late String date='';
+  late String hourStar='';
+  late String hourEnd='';
   @override
   void initState(){
   super.initState();
@@ -36,10 +34,13 @@ class _CreationEventPage extends State<CreationEventPage> {
         ),
         body: const SingleChildScrollView(
           child: Column(children: [  
-            EventCreationForm(),
-            ]
+            EventCreationForm(
+              buttonName: 'Dar de alta evento',
+            ),
+            ],
+          
+          ), 
           ),
-        ),
           floatingActionButton: Column(
             mainAxisAlignment: MainAxisAlignment.end, 
             crossAxisAlignment: CrossAxisAlignment.end, 
@@ -56,6 +57,10 @@ class _CreationEventPage extends State<CreationEventPage> {
         ),
       ),
     );
+  }
+  void _CreationValided()
+  {
+
   }
 }
 

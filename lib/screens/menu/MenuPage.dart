@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:manejador_eventos/controller/auth_controller/auth.dart';
+
 
 class MenuPage extends StatefulWidget {
   const MenuPage({super.key, });
@@ -10,6 +12,7 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   final double sizedBoxHeight = 20;
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context)
@@ -18,6 +21,7 @@ class _MenuPageState extends State<MenuPage> {
       appBar: AppBar(
         backgroundColor:  Colors.tealAccent.shade700,
         title: const Text("Menu Principal"),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -64,6 +68,7 @@ class _MenuPageState extends State<MenuPage> {
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             onPressed: (){
+              _authService.signOut();
               context.go('/login-page');
           },
             child: const Icon(Icons.logout_sharp)

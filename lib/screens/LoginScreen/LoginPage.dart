@@ -1,22 +1,25 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
-import 'package:manejador_eventos/screens/widgets/login_register_form.dart';
+import 'package:manejador_eventos/screens/widgets/authForms/login_register_form.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State createState(){
+  ConsumerState createState(){
   return _LoginPageState();
   
 } 
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   final AuthService _auth = AuthService();
 
   late String email = '',password = '';
+
 
 
   @override
@@ -63,18 +66,20 @@ class _LoginPageState extends State<LoginPage> {
 
 void _validateLogin(String email, String password) async {
     var result = await _auth.signInEmailAndPassword(email, password);
-    print(result);
-    if (result == 1 || result == 2 || result == null) {
+
+    if (result == true) {
+      context.go('/menu-page');
+    }else 
+    {
+      String resultTexto = result.toString();
       showDialog(
         context: context,
-        builder: (context) => const AlertDialog(
-          title: Text('Usuario/Password invalido'),
-          icon: Icon(Icons.password_sharp),
-          content: Text('Intente Denuevo'),
+        builder: (context) => AlertDialog(
+          title: const Text('Error al Iniciar Sesion'),
+          icon: const Icon(Icons.password_sharp),
+          content: Text(resultTexto),
         ),
       );
-    } else if (result != null) {
-      context.go('/menu-page');
     }
   }
 

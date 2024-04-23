@@ -1,56 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/creation_form_textfield.dart';
-
+import 'package:go_router/go_router.dart';
+import 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
 class EventCreationForm extends StatefulWidget {
-  const EventCreationForm({super.key});
-
+  final String buttonName;
+  const EventCreationForm({super.key,required this.buttonName});
   @override
   State<EventCreationForm> createState() => _MyWidgetState();
 }
 
 class _MyWidgetState extends State<EventCreationForm> {
+  //final _formKey = GlobalKey<FormState>();
+  late String nameEvent= '';
+  late String typeEvent='';
+  late String description='';
+  late String location='';
+  late String date='';
+  late String hourStar='';
+  late String hourEnd='';
+  late String capacity='';
   @override
   Widget build(BuildContext context) {
-    return const Form(
+    return  Form(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 10),
-                CreationFormField(
-                  labelText: "Nombre"
+                const SizedBox(height: 10),
+                name_Input(
+                  onChanged: (value) => nameEvent=value
+                ),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                Type_Event(
+                  selectedType: 'Tipo evento 1', 
+                  types: const ['Tipo evento 1', 'Tipo evento 2', 'Tipo evento 3', 'Tipo evento 4'],
+                  onChanged: (String? newValue){typeEvent=newValue!;},
                   ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Tipo de evento"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Descripcion"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Ubicacion"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Fecha del Evento"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Hora de Inicio"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(
-                  labelText: "Hora de Cierre"
-                  ),
-                Padding(padding: EdgeInsets.only(top: 12)),
-                CreationFormField(labelText: "Aforo"),
-                Padding(padding: EdgeInsets.only(top: 12)),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                Description_Input(
+                  onChanged: (value) => description=value
+                ),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                address_input(
+                  onChanged: (value) => location=value
+                ),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                const Date_Input(),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                const HourStart_input(  ),          
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                //hora del final del evento
+                const HourEnd_input(),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                //afore
+                Capacity_input(),
+                const Padding(padding: EdgeInsets.only(top: 12)),
+                ElevatedButton(
+                  onPressed: (){
+                    showDialog(
+                  context: context, 
+                  builder: (context)=> const AlertDialog(
+                    title: Text('Creacion de Evento!'),
+                    icon: Icon(Icons.password_sharp),
+                    content: Text('Su evento se creo exitosamente!'),
+                  )
+                  );
+                  Future.delayed(const Duration(seconds: 4));
+                    context.go('/menu-page');
+                  }, child: const Text('Crear evento')
+                  )
                 ],
                 ),
           )
           );
   }
+
+
 }

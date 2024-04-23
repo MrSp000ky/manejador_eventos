@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
-import 'package:manejador_eventos/screens/widgets/login_register_form.dart';
+import 'package:manejador_eventos/screens/widgets/authForms/login_register_form.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -65,35 +65,12 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
 
 
 void _validateRegister(String email , String password) async {
-    print(email);
-    print(password);
+
     
     var result = await _auth.createAccount(email, password);
 
-    if (result == 1) {
+    if (result == true) {
       showDialog(
-        
-        context: context, 
-        builder: (context)=> const AlertDialog(
-          title: Text('Contraseña debil.'),
-          icon: Icon(Icons.password_sharp),
-          content: Text('La Contraseña ingresada es demasiado debil.'),
-        )
-        );
-    } else if (result == 2){
-      showDialog(
-        
-        context: context, 
-        builder: (context)=> const AlertDialog(
-          title: Text('Email en uso.'),
-          icon: Icon(Icons.password_sharp),
-          content: Text('Ese email ya esta registrado.'),
-        )
-        );
-    } else if (result != null) {
-      
-      showDialog(
-        
         context: context, 
         builder: (context)=> const AlertDialog(
           title: Text('Su cuenta se creo exitosamente!'),
@@ -103,6 +80,17 @@ void _validateRegister(String email , String password) async {
         );
       await Future.delayed(const Duration(seconds: 4));
       context.go('/login-page');
+    } 
+    else
+    {
+      showDialog(
+        context: context, 
+        builder: (context)=> AlertDialog(
+          title: const Text('Error al crear cuenta.'),
+          icon: const Icon(Icons.password_sharp),
+          content: Text(result),
+        )
+        );
     }
   
 }

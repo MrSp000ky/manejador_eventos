@@ -1,53 +1,63 @@
 import "package:firebase_auth/firebase_auth.dart";
+import "package:manejador_eventos/models/user_model.dart";
 
 
 class AuthService{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  UserModel? _currentUser;
+
+  UserModel? get currentUser => _currentUser;
   
 
-  Future createAccount (String correo, String pass) async {
-    try{
-      UserCredential userCredential =  await FirebaseAuth.instance.createUserWithEmailAndPassword(email: correo, password: pass);
-
-      print(userCredential.user);
-      return (userCredential.user?.uid);
-
-    }on FirebaseAuthException catch(e) {
-      if (e.code == 'weak-password') {
-        print('La password es muy debil');
-        return 1;
+  Future createAccount(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user;
+      if (user != null) {
+        _currentUser = UserModel(uid: user.uid, email: user.email ?? '', password: '');
+        return true;
+      }
+    } on FirebaseAuthException catch (e) {
+       if (e.code == 'weak-password') {
+        return "Contraseña muy debil";
       }else if(e.code == 'email-already-in-use'){
-        print('Ese correo ya esta registrado.');
-        return 2;
+        return "Ese correo ya esta registrado";
+      }else if(e.code == 'invalid-email'){
+        return "Ingresa un correo Valido";
       }
-
-    } catch(e){
-      print(e);
+      else {
+        return "Hubo un error al registrar tu cuenta, intentelo denuevo";        
+      }
     }
+    return null;
   }
 
 
-  Future signInEmailAndPassword(String email, String password) async{
-    try{
-
-    UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
-
-      final a = userCredential.user;
-      if(a?.uid != null){
-        return a?.uid;
+  Future signInEmailAndPassword(String email, String password) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      User? user = userCredential.user;
+      if (user != null) {
+        _currentUser = UserModel(uid: user.uid, email: user.email ?? '', password: '');
+        return true;
       }
-    
-  } on FirebaseAuthException catch(e){
-    
+    } on FirebaseAuthException catch (e) {
       if (e.code == 'invalid-credential') {
-        return 1;
-      }else if (e.code == 'wrong-password') {
-        return 2;
+        return "Credenciales Invalidas";
+      }else if (e.code == 'invalid-email') {
+        return "Ingresa un Email valido";
       }
+      else {
+        return "Credenciales Invalidas";
+      }
+    }
+    return null;
   }
 
-
+  Future<void> signOut() async {
+    await _auth.signOut();
+    _currentUser = null;
   }
 
 
