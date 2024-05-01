@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
 import 'package:manejador_eventos/presentation/screens/widgets/authForms/login_register_form.dart';
 
-class RegistrationPage extends StatefulWidget {
+class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
   
   @override
   
-  State createState(){
+  ConsumerState createState(){
     return _RegistrationPageStateState();
 
   }
@@ -16,7 +18,7 @@ class RegistrationPage extends StatefulWidget {
 
 }
 
-class _RegistrationPageStateState extends State<RegistrationPage> {
+class _RegistrationPageStateState extends ConsumerState<RegistrationPage> {
 
   final AuthService _auth = AuthService();
 
@@ -48,7 +50,9 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
                 ),
                 Padding(padding: const EdgeInsets.all(8.0),
                 child: LoginRegisterForm(
-                  onLogin: _validateRegister, 
+                  onLogin: (email, password) {
+                    ref.read(authProvider.notifier).validateRegister(email, password, context);
+                    },
                   buttonName: "Registrar Cuenta")
                 )
               ],
@@ -65,10 +69,7 @@ class _RegistrationPageStateState extends State<RegistrationPage> {
 
 
 void _validateRegister(String email , String password) async {
-
-    
     var result = await _auth.createAccount(email, password);
-
     if (result == true) {
       showDialog(
         context: context, 
@@ -92,7 +93,6 @@ void _validateRegister(String email , String password) async {
         )
         );
     }
-  
 }
 
 }

@@ -31,4 +31,31 @@ class AuthNotifier extends Notifier<bool> {
       );
     }
   }
+
+  Future <void> validateRegister(String email , String password, BuildContext context) async {
+    var result = await _auth.createAccount(email, password);
+    if (result == true) {
+      showDialog(
+        context: context, 
+        builder: (context)=> const AlertDialog(
+          title: Text('Su cuenta se creo exitosamente!'),
+          icon: Icon(Icons.password_sharp),
+          content: Text('Ahora inicie sesion con su cuenta'),
+        )
+        );
+      await Future.delayed(const Duration(seconds: 4));
+      context.go('/login-page');
+    } 
+    else
+    {
+      showDialog(
+        context: context, 
+        builder: (context)=> AlertDialog(
+          title: const Text('Error al crear cuenta.'),
+          icon: const Icon(Icons.password_sharp),
+          content: Text(result),
+        )
+        );
+    }
+}
 }
