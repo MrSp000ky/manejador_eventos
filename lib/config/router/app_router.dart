@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:manejador_eventos/screens/screens.dart';
-import 'package:manejador_eventos/screens/viewScreen/ViewPageScreen.dart';
+import 'package:manejador_eventos/presentation/screens/screens.dart';
+import 'package:manejador_eventos/presentation/screens/viewScreen/ViewPageScreen.dart';
 final appRouter = GoRouter(routes:
   
   [

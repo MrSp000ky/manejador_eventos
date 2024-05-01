@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:manejador_eventos/screens/widgets/login_register_custom_fields/email_input.dart';
-import 'package:manejador_eventos/screens/widgets/login_register_custom_fields/password_input.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/login_register_custom_fields/email_input.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/login_register_custom_fields/password_input.dart';
 
 
 class LoginRegisterForm extends StatefulWidget {

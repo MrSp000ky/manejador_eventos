@@ -1,9 +1,0 @@
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/name_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/type_event_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/description_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/address_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/date_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/hourStart_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/hourEnd_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/capacity_input.dart';
-export 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';

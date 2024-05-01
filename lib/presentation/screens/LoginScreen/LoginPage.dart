@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
-import 'package:manejador_eventos/screens/widgets/authForms/login_register_form.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/authForms/login_register_form.dart';
 
 class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({super.key});
@@ -20,13 +21,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   late String email = '',password = '';
 
-
-
   @override
   void initState(){
   super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: LoginRegisterForm(
                   buttonName: "LogIn",
-                  onLogin: _validateLogin, // Pasamos la función de callback
+                  onLogin: (email, password) {
+                    ref.read(authProvider.notifier).login(email, password, context);
+                    }, 
                 ),
               ),
               TextRegister(),
@@ -64,24 +64,24 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
 
-void _validateLogin(String email, String password) async {
-    var result = await _auth.signInEmailAndPassword(email, password);
+// void _validateLogin(String email, String password) async {
+//     var result = await _auth.signInEmailAndPassword(email, password);
 
-    if (result == true) {
-      context.go('/menu-page');
-    }else 
-    {
-      String resultTexto = result.toString();
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Error al Iniciar Sesion'),
-          icon: const Icon(Icons.password_sharp),
-          content: Text(resultTexto),
-        ),
-      );
-    }
-  }
+//     if (result == true) {
+//       context.go('/menu-page');
+//     }else 
+//     {
+//       String resultTexto = result.toString();
+//       showDialog(
+//         context: context,
+//         builder: (context) => AlertDialog(
+//           title: const Text('Error al Iniciar Sesion'),
+//           icon: const Icon(Icons.password_sharp),
+//           content: Text(resultTexto),
+//         ),
+//       );
+//     }
+//   }
 
 Widget TextRegister(){
   return Row(

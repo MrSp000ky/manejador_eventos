@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
-import 'package:manejador_eventos/screens/widgets/authForms/login_register_form.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/authForms/login_register_form.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});

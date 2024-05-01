@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:manejador_eventos/screens/widgets/event_creation_form.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/event_creation_form.dart';
 class CreationEventPage extends StatefulWidget {
   const CreationEventPage({super.key});
   @override

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
 class EventCreationForm extends StatefulWidget {
   final String buttonName;
   const EventCreationForm({super.key,required this.buttonName});

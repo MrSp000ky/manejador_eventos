@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/models/event_model.dart';
-import 'package:manejador_eventos/screens/widgets/viewEvent_widgets/event_card.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/viewEvent_widgets/event_card.dart';
 //para ver nuestros eventos
 class ViewPageScreen extends StatefulWidget {
   const ViewPageScreen({super.key});

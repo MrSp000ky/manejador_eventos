@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:manejador_eventos/screens/widgets/event_creation_custom_fields/creation_form_textfield.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/event_creation_custom_fields/creation_form_textfield.dart';
 
 class EventCreationForm extends StatefulWidget {
   const EventCreationForm({super.key});
