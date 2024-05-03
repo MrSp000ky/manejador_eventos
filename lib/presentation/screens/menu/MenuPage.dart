@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/controller/auth_controller/auth.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
 
 
-class MenuPage extends StatefulWidget {
+class MenuPage extends ConsumerWidget {
   const MenuPage({super.key, });
 
   @override
-  State<MenuPage> createState() => _MenuPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
 
-class _MenuPageState extends State<MenuPage> {
-  final double sizedBoxHeight = 20;
-  final AuthService _authService = AuthService();
+    final authNotifier = ref.watch(authProvider);
+    final currentUser = authNotifier?.email;
+    const double sizedBoxHeight = 20;
+    final AuthService authService = AuthService();
 
-  @override
-  Widget build(BuildContext context)
-  {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor:  Colors.tealAccent.shade700,
-        title: const Text("Menu Principal"),
+        title:  Flexible(
+          fit: FlexFit.tight,
+          child: Text("Bienvenido $currentUser")
+          ),
         centerTitle: true,
+        
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: sizedBoxHeight,
           ),
           ListTile(
@@ -36,7 +40,7 @@ class _MenuPageState extends State<MenuPage> {
             tileColor: Colors.cyan,
             onTap: () => context.go('/creation-event'),
           ),
-           SizedBox(
+           const SizedBox(
             height: sizedBoxHeight,
           ),
           ListTile(
@@ -45,7 +49,7 @@ class _MenuPageState extends State<MenuPage> {
             tileColor: Colors.red,
             onTap:() => context.go('/view-event'),
             ),
-            SizedBox(
+            const SizedBox(
             height: sizedBoxHeight,
           ),
             ListTile(
@@ -68,7 +72,7 @@ class _MenuPageState extends State<MenuPage> {
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
             onPressed: (){
-              _authService.signOut();
+              authService.signOut();
               context.go('/login-page');
           },
             child: const Icon(Icons.logout_sharp)

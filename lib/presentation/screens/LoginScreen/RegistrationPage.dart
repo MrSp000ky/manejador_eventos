@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:manejador_eventos/controller/auth_controller/auth.dart';
 import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
-import 'package:manejador_eventos/presentation/screens/widgets/authForms/login_register_form.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/authForms/register_form.dart';
 
 class RegistrationPage extends ConsumerStatefulWidget {
   const RegistrationPage({super.key});
@@ -20,9 +19,9 @@ class RegistrationPage extends ConsumerStatefulWidget {
 
 class _RegistrationPageStateState extends ConsumerState<RegistrationPage> {
 
-  final AuthService _auth = AuthService();
 
-  late String email = '',password = '',name = '';
+
+  late String email = '',password = '',name = '', username = '';
  
 
   @override
@@ -49,9 +48,9 @@ class _RegistrationPageStateState extends ConsumerState<RegistrationPage> {
                   child: Text('Registrar Usuario ',style: TextStyle(color: Colors.black,fontSize: 20),),
                 ),
                 Padding(padding: const EdgeInsets.all(8.0),
-                child: LoginRegisterForm(
-                  onLogin: (email, password) {
-                    ref.read(authProvider.notifier).validateRegister(email, password, context);
+                child: RegisterForm(
+                  onLogin: (email, password,username) {
+                    ref.read(authProvider.notifier).validateRegister(email, password,context);
                     },
                   buttonName: "Registrar Cuenta")
                 )
@@ -66,33 +65,5 @@ class _RegistrationPageStateState extends ConsumerState<RegistrationPage> {
       ),
     );
   }
-
-
-void _validateRegister(String email , String password) async {
-    var result = await _auth.createAccount(email, password);
-    if (result == true) {
-      showDialog(
-        context: context, 
-        builder: (context)=> const AlertDialog(
-          title: Text('Su cuenta se creo exitosamente!'),
-          icon: Icon(Icons.password_sharp),
-          content: Text('Ahora inicie sesion con su cuenta'),
-        )
-        );
-      await Future.delayed(const Duration(seconds: 4));
-      context.go('/login-page');
-    } 
-    else
-    {
-      showDialog(
-        context: context, 
-        builder: (context)=> AlertDialog(
-          title: const Text('Error al crear cuenta.'),
-          icon: const Icon(Icons.password_sharp),
-          content: Text(result),
-        )
-        );
-    }
-}
 
 }
