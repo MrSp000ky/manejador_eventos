@@ -12,7 +12,7 @@ class MenuPage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
 
     final authNotifier = ref.watch(authProvider);
-    final currentUser = authNotifier?.email;
+    final currentUser = authNotifier?.username;
     const double sizedBoxHeight = 20;
     final AuthService authService = AuthService();
 

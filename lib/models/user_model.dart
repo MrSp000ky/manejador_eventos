@@ -4,9 +4,9 @@ class UserModel {
   final String uid;
   String email;
   String password;
-  //String username;
+  String username;
 
-  UserModel({required this.uid,required this.email, required this.password});
+  UserModel({required this.uid,required this.email, required this.password , required this.username});
 
   // Getter y Setter para el correo electrónico del usuario
   String get userEmail => email;
@@ -33,5 +33,5 @@ class UserModel {
 
 // Función para crear UserModel a partir de User de Firebase
 UserModel userModelFromFirebase(User user) {
-  return UserModel(uid: user.uid, email: user.email ?? '', password: '');
+  return UserModel(uid: user.uid, email: user.email ?? '', password: '', username: '');
 }

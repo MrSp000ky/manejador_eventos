@@ -50,7 +50,7 @@ class _RegistrationPageStateState extends ConsumerState<RegistrationPage> {
                 Padding(padding: const EdgeInsets.all(8.0),
                 child: RegisterForm(
                   onLogin: (email, password,username) {
-                    ref.read(authProvider.notifier).validateRegister(email, password,context);
+                    ref.read(authProvider.notifier).validateRegister(email, password, username, context);
                     },
                   buttonName: "Registrar Cuenta")
                 )

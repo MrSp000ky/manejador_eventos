@@ -22,7 +22,7 @@ class AuthNotifier extends Notifier<UserModel?> {
   Future<void> login(String email, String password, BuildContext context) async {
     var result = await _auth.signInEmailAndPassword(email, password);
     if (result == true) {
-      _currentUser = _auth.currentUser;
+      _currentUser =await  _auth.getCurrentUser();
       state = _currentUser;
       context.go('/menu-page');
     } else {
@@ -38,8 +38,8 @@ class AuthNotifier extends Notifier<UserModel?> {
     }
   }
 
-  Future <void> validateRegister(String email , String password, BuildContext context) async {
-    var result = await _auth.createAccount(email, password);
+  Future <void> validateRegister(String email , String password, String username, BuildContext context) async {
+    var result = await _auth.createAccount(email, password , username);
     if (result == true) {
       _currentUser = _auth.currentUser;
       showDialog(
