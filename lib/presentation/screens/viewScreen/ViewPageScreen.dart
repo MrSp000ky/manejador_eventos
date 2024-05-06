@@ -1,53 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/providers/event_provider.dart';
 import 'package:manejador_eventos/presentation/screens/widgets/viewEvent_widgets/event_card.dart';
 //para ver nuestros eventos
-class ViewPageScreen extends StatefulWidget {
+class ViewPageScreen extends ConsumerStatefulWidget {
   const ViewPageScreen({super.key});
 
   @override
-  State createState(){
+  ConsumerState createState(){
     return _ViewPageScreen();
   }  
 }
 
-class _ViewPageScreen extends State<ViewPageScreen>{
-
-  final List<Event> eventos = [
-    Event(
-      nameEvent: 'Tortas Omar Fest',
-      typeEvent: 'Celebraciones y Fiestas',
-      description: 'Ven a reunirte y disfrutar de sabrosa comida!',
-      location: 'Tortas Omar 3101 Col Campesina',
-      date: DateTime.now().toString().split(' ')[0],
-      hourStar: '2:00 pm',
-      hourEnd: '8:00 pm',
-      capacity: '100',
-    ),
-    Event(
-      nameEvent: 'Cumpleaños Pancho',
-      typeEvent: 'Celebraciones y Fiestas',
-      description: 'Bienvenida toda la familia Sanchez',
-      location: 'Rio Balsas 2043 Col Nvo Mexicali',
-      date: DateTime.now().toString().split(' ')[0],
-      hourStar: '12:00 pm',
-      hourEnd: '10:00 pm',
-      capacity: '20',
-    ),
-  ];
-
-
+class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
 
   @override
-  void initState(){
-  super.initState();
-
-
-}
+  void initState() {
+    super.initState();
+    ref.read(eventProvider.notifier).fetchEvents(); // fetch events when the page is initialized
+  }
   
   @override
   Widget build(BuildContext context) {
+  final events = ref.watch(eventProvider);
   return SafeArea(
     child: Scaffold(
       appBar: AppBar(
@@ -58,9 +34,9 @@ class _ViewPageScreen extends State<ViewPageScreen>{
       ),
       body: Center(
         child: ListView.builder(
-          itemCount: eventos.length,
+          itemCount: events.length,
           itemBuilder: (context, index) {
-            return EventoCard(evento: eventos[index]);
+            return EventoCard(evento: events[index]);
           },
         ),
       ),

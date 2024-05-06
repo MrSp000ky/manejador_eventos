@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Capacity_input extends StatefulWidget {
+  
+  final Function(int) onChanged;
+  const Capacity_input({super.key, required this.onChanged});
+
   @override
   _Capacity_inputState createState() => _Capacity_inputState();
 }
@@ -12,6 +16,7 @@ class _Capacity_inputState extends State<Capacity_input> {
     setState(() {
       count++;
     });
+    widget.onChanged(count);
   }
 
   void _decrement() {
@@ -20,6 +25,8 @@ class _Capacity_inputState extends State<Capacity_input> {
         count--;
       }
     });
+    widget.onChanged(count);
+
   }
 
   @override
@@ -27,17 +34,17 @@ class _Capacity_inputState extends State<Capacity_input> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Text('Aforo'),
+        const Text('Aforo'),
         IconButton(
-          icon: Icon(Icons.remove),
+          icon:const Icon(Icons.remove),
           onPressed: _decrement,
         ),
         Text(
           '$count',
-          style: TextStyle(fontSize: 20),
+          style: const TextStyle(fontSize: 20),
         ),
         IconButton(
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: _increment,
         ),
       ],

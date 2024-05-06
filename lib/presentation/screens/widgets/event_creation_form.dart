@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
 import 'package:manejador_eventos/presentation/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
-class EventCreationForm extends StatefulWidget {
+class EventCreationForm extends ConsumerStatefulWidget {
+
+  final void Function(Event) onCreate;
   final String buttonName;
-  const EventCreationForm({super.key,required this.buttonName});
+  const EventCreationForm({super.key,required this.buttonName, required this.onCreate});
   @override
-  State<EventCreationForm> createState() => _MyWidgetState();
+  ConsumerState<EventCreationForm> createState() => _MyWidgetState();
 }
 
-class _MyWidgetState extends State<EventCreationForm> {
+class _MyWidgetState extends ConsumerState<EventCreationForm> {
   //final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   late String nameEvent= '';
-  late String typeEvent='';
+  late String typeEvent = 'Casual Reunion';
   late String description='';
   late String location='';
   late String date='';
@@ -21,6 +26,7 @@ class _MyWidgetState extends State<EventCreationForm> {
   @override
   Widget build(BuildContext context) {
     return  Form(
+          key:  _formKey,
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -31,39 +37,56 @@ class _MyWidgetState extends State<EventCreationForm> {
                   onChanged: (value) => nameEvent=value
                 ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
-                Type_Event(),
+                Type_Event(
+                  onChanged: (value) =>  typeEvent = value,
+                ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
                 Description_Input(
-                  onChanged: (value) => description=value
+                  onChanged: (value) => description = value
                 ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
                 address_input(
                   onChanged: (value) => location=value
                 ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
-                const Date_Input(),
+                Date_Input(
+                  onChanged: (value) => date = value.toString(),
+                ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
-                const HourStart_input(  ),          
+                HourStart_input(
+                  onChanged: (value) => hourStar = value.hour.toString()
+                ),          
                 const Padding(padding: EdgeInsets.only(top: 12)),
                 //hora del final del evento
-                const HourEnd_input(),
+                HourEnd_input(
+                  onChanged: (value) => hourEnd = value.hour.toString(),
+                ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
-                //afore
-                Capacity_input(),
+                Capacity_input(
+                  onChanged: (value) =>  capacity = value.toString(),
+                ),
                 const Padding(padding: EdgeInsets.only(top: 12)),
                 ElevatedButton(
                   onPressed: (){
-                    showDialog(
-                  context: context, 
-                  builder: (context)=> const AlertDialog(
-                    title: Text('Creacion de Evento!'),
-                    icon: Icon(Icons.password_sharp),
-                    content: Text('Su evento se creo exitosamente!'),
-                  )
+              if (_formKey.currentState!.validate()) {
+                _formKey.currentState!.save();
+                final user = ref.watch(authProvider);
+                final event = Event(
+                    nameEvent: nameEvent,
+                    typeEvent: typeEvent,
+                    description: description,
+                    location: location,
+                    date: date,
+                    hourStar: hourStar,
+                    hourEnd: hourEnd,
+                    capacity: capacity,
+                    owner: user?.username ?? ''
+                    
                   );
-                  Future.delayed(const Duration(seconds: 4));
-                    context.go('/menu-page');
-                  }, child: const Text('Crear evento')
+                  widget.onCreate(event);
+              }
+            }, 
+                  child: const Text('Crear evento')
                   )
                 ],
                 ),

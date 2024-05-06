@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 class HourStart_input extends StatefulWidget{
-const HourStart_input({super.key});
+  
+  final ValueChanged<TimeOfDay> onChanged;
+  const HourStart_input({super.key, required this.onChanged});
 
 @override
 _HourStartState createState(){
@@ -28,6 +30,7 @@ class _HourStartState extends State<HourStart_input>{
                   setState(() {
                     selectedTime= timeOfDay;
                   });
+                  widget.onChanged(timeOfDay); 
                 }
             },),
         ],

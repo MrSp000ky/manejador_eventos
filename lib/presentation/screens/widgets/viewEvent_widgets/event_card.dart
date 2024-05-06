@@ -9,7 +9,7 @@ class EventoCard extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return Card(
-      color: Color.fromARGB(255, 190, 255, 255),
+      color: const Color.fromARGB(255, 190, 255, 255),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 4,
       child: Column(
@@ -44,11 +44,12 @@ class EventoCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text('Hora de fin: ${evento.hourEnd}'),
                 const SizedBox(height: 4),
-                Text('Aforo: ${evento.capacity}  personas.'),
+                Text('Capacidad: ${evento.capacity}  personas.'),
+                const SizedBox(height: 16),
+                Text('Owner: ${evento.owner}'),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
-                    
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text('Editar evento'),

@@ -2,16 +2,16 @@
 import 'package:flutter/material.dart';
 
 class Type_Event extends StatefulWidget {
-
-  Type_Event({super.key
-  });
+  final ValueChanged<String> onChanged;
+  const Type_Event({super.key, required this.onChanged });
 
   @override
   _Type_EventState createState() => _Type_EventState();
 }
 class _Type_EventState extends State<Type_Event> {
   // ignore: unused_field
-  String _selectedOption = 'Tipo de Evento 1';
+  String _selectedOption = 'Casual Reunion';
+
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
@@ -26,10 +26,11 @@ class _Type_EventState extends State<Type_Event> {
       value: _selectedOption, // Valor seleccionado
       onChanged: (String? newValue) {
         setState(() {
-          _selectedOption = newValue!; // Actualizar el valor seleccionado
+          _selectedOption = newValue?? ''; // Actualizar el valor seleccionado
+          widget.onChanged(_selectedOption); 
         });
       },
-      items: <String>['Tipo de Evento 1', 'Tipo de Evento 2', 'Tipo de Evento 3', 'Tipo de Evento 4']
+      items: <String>['BirthDay', 'Casual Reunion', 'Family Reunion', 'Carnita Asada' , 'Graduation Party']
           .map((String value) {
         return DropdownMenuItem<String>(
           value: value,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Date_Input extends StatefulWidget {
-  const Date_Input({Key? key}) : super(key: key);
+  final ValueChanged<String> onChanged;
+  const Date_Input({super.key, required this.onChanged});
 
   @override
   State<Date_Input> createState() => _Date_InputState();
@@ -41,6 +42,7 @@ class _Date_InputState extends State<Date_Input> {
     if (picked != null) {
       setState(() {
         _selectedDate = picked;
+         widget.onChanged(_selectedDate!.toString().split(' ')[0]);
       });
     }
   }

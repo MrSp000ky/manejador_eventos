@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 class HourEnd_input extends StatefulWidget{
-const HourEnd_input({super.key});
+    final ValueChanged<TimeOfDay> onChanged;
+
+    const HourEnd_input({super.key, required this.onChanged});
 
 @override
 _HourEndState createState(){
@@ -19,6 +21,7 @@ class _HourEndState extends State<HourEnd_input>{
             child: const Text('Elige la hora de cierre'),
             onPressed: () async{
               final TimeOfDay? timeOfDay = await showTimePicker(
+                
                 context: context, 
                 initialTime: selectedTime,
                 initialEntryMode: TimePickerEntryMode.dial,
@@ -28,6 +31,7 @@ class _HourEndState extends State<HourEnd_input>{
                   setState(() {
                     selectedTime= timeOfDay;
                   });
+                  widget.onChanged(timeOfDay);
                 }
             },),
         ],
