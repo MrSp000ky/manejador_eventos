@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 class name_Input extends StatelessWidget {
-  final Function(String)? onChanged;
 
-  const name_Input({super.key, this.onChanged});
+  final String? initialValue;
+  final Function(String)? onChanged;
+  const name_Input({super.key, this.onChanged, this.initialValue});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       onChanged: onChanged,
       maxLength: 40,
       decoration: InputDecoration(

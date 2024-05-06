@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Capacity_input extends StatefulWidget {
-  
+  final String? initialValue;
   final Function(int) onChanged;
-  const Capacity_input({super.key, required this.onChanged});
+  const Capacity_input({super.key, required this.onChanged, this.initialValue = ''});
 
   @override
   _Capacity_inputState createState() => _Capacity_inputState();
@@ -11,6 +11,15 @@ class Capacity_input extends StatefulWidget {
 
 class _Capacity_inputState extends State<Capacity_input> {
   int count = 1;
+
+    @override
+    void initState() {
+    super.initState();
+    if (widget.initialValue!= null && widget.initialValue!= '') {
+      count = int.parse(widget.initialValue!);
+    }
+  }
+
 
   void _increment() {
     setState(() {
@@ -34,7 +43,7 @@ class _Capacity_inputState extends State<Capacity_input> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        const Text('Aforo'),
+        const Text('Capacidad (Personas)'),
         IconButton(
           icon:const Icon(Icons.remove),
           onPressed: _decrement,

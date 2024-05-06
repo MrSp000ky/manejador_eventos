@@ -34,6 +34,7 @@ class _CreationEventPage extends ConsumerState<CreationEventPage> {
         appBar: AppBar(
           backgroundColor: Colors.cyan,
           title: const Text('Creacion de Evento'),
+          
         ),
         body: SingleChildScrollView(
           child: Column(children: [  

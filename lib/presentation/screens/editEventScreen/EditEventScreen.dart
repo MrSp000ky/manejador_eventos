@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/presentation/providers/event_provider.dart';
 import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
 
 class EditEventScreen extends ConsumerStatefulWidget {
   final Event event;
@@ -33,111 +34,63 @@ class _EditEventScreenState extends ConsumerState<EditEventScreen> {
   }
   final _formKey = GlobalKey<FormState>();
   
-@override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Editar Evento'),
+        title: const Text('Editar Evento'), 
+        backgroundColor: Colors.red,
       ),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
             child: Column(
               children: [
-                TextFormField(
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                name_Input(
                   initialValue: _event.nameEvent,
                   onChanged: (value) => eventName = value,
-                  decoration: const InputDecoration(labelText: 'Nombre del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un nombre para el evento';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                Type_Event(
                   initialValue: _event.typeEvent,
                   onChanged: (value) => eventType = value,
-                  decoration: const InputDecoration(labelText: 'Tipo de evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un tipo de evento';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                Description_Input(
                   initialValue: _event.description,
                   onChanged: (value) => eventDescription = value,
-                  decoration: const InputDecoration(labelText: 'Descripción del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una descripción para el evento';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                address_input(
                   initialValue: _event.location,
                   onChanged: (value) => eventLocation = value,
-                  decoration: const InputDecoration(labelText: 'Ubicación del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una ubicación para el evento';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                Date_Input(
                   initialValue: _event.date,
                   onChanged: (value) => eventDate = value,
-                  decoration: const InputDecoration(labelText: 'Fecha del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una fecha para el evento';
-                    }
-                    return null;
-                  },
                 ),
-                TextFormField(
-                  initialValue: _event.hourStar,
-                  onChanged: (value) => eventHourStar = value,
-                  decoration: const InputDecoration(labelText: 'Hora de inicio del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una hora de inicio para el evento';
-                    }
-                    return null;
-                  },
+                const Padding(padding: EdgeInsets.only(top: 15)),
+                HourStart_input(
+                  initialValue: TimeOfDay(hour: int.parse(_event.hourStar), minute: 0),
+                  onChanged: (value) => eventHourStar = value.hour.toString(),
                 ),
-                TextFormField(
-                  initialValue: _event.hourEnd,
-                  onChanged: (value) => eventHourEnd = value,
-                  decoration: const InputDecoration(labelText: 'Hora de fin del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una hora de fin para el evento';
-                    }
-                    return null;
-                  },
+                const Padding(padding: EdgeInsets.only(top: 15)),
+                HourEnd_input(
+                  initialValue: TimeOfDay(hour: int.parse(_event.hourEnd), minute: 0),
+                  onChanged: (value) => eventHourEnd = value.hour.toString(),
                 ),
-                TextFormField(
-                  initialValue: _event.capacity,
-                  onChanged: (value) => eventCapacity = value,
-                  decoration: const InputDecoration(labelText: 'Capacidad del evento'),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese una capacidad para el evento';
-                    }
-                    return null;
-                  },
+                const Padding(padding: EdgeInsets.only(top: 15)),
+                Capacity_input(
+                  initialValue: int.parse(_event.capacity).toString(),
+                  onChanged: (value) => eventCapacity = value.toString(),
                 ),
                 ElevatedButton(
                   onPressed: () {
-                  if (_formKey.currentState?.validate()?? false) {
-                    final updatedEvent = Event(
+                    if (_formKey.currentState?.validate()?? false) {
+                      final updatedEvent = Event(
                       id: _event.id,
                       nameEvent: eventName.isEmpty? _event.nameEvent : eventName,
                       typeEvent: eventType.isEmpty? _event.typeEvent : eventType,
@@ -148,10 +101,8 @@ class _EditEventScreenState extends ConsumerState<EditEventScreen> {
                       hourEnd: eventHourEnd.isEmpty? _event.hourEnd : eventHourEnd,
                       capacity: eventCapacity.isEmpty? _event.capacity : eventCapacity,
                       owner: _event.owner,
-                    );
-                      
+                      );
                       ref.read(eventProvider.notifier).updateEvent(updatedEvent);
-                      
                       context.go('/view-event');
                     }
                   },

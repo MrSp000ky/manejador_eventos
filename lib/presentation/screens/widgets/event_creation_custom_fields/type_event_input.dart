@@ -2,8 +2,10 @@
 import 'package:flutter/material.dart';
 
 class Type_Event extends StatefulWidget {
+
+  final String? initialValue;
   final ValueChanged<String> onChanged;
-  const Type_Event({super.key, required this.onChanged });
+  const Type_Event({super.key, required this.onChanged, this.initialValue });
 
   @override
   _Type_EventState createState() => _Type_EventState();
@@ -11,6 +13,12 @@ class Type_Event extends StatefulWidget {
 class _Type_EventState extends State<Type_Event> {
   // ignore: unused_field
   String _selectedOption = 'Casual Reunion';
+
+   @override
+    void initState() {
+      super.initState();
+      _selectedOption = widget.initialValue?? 'Casual Reunion';
+  }
 
   @override
   Widget build(BuildContext context) {
