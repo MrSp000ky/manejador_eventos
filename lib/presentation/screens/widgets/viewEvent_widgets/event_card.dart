@@ -10,7 +10,7 @@ class EventoCard extends StatelessWidget {
    @override
   Widget build(BuildContext context) {
     return Card(
-      color: const Color.fromARGB(255, 190, 255, 255),
+      color: const Color.fromARGB(255, 255, 220, 220),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       elevation: 4,
       child: Column(
