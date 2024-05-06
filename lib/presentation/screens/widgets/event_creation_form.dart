@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:manejador_eventos/models/event_model.dart';
 import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
 import 'package:manejador_eventos/presentation/screens/widgets/event_creation_custom_fields/inputs_creation_event_barrido.dart';
+
 class EventCreationForm extends ConsumerStatefulWidget {
 
   final void Function(Event) onCreate;
@@ -72,6 +73,7 @@ class _MyWidgetState extends ConsumerState<EventCreationForm> {
                 _formKey.currentState!.save();
                 final user = ref.watch(authProvider);
                 final event = Event(
+                    id: '',
                     nameEvent: nameEvent,
                     typeEvent: typeEvent,
                     description: description,

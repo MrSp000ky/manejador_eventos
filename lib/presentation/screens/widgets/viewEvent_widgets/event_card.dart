@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/models/event_model.dart';
 
 class EventoCard extends StatelessWidget {
@@ -50,6 +51,7 @@ class EventoCard extends StatelessWidget {
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
+                    context.go('/edit-event', extra: evento);
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text('Editar evento'),

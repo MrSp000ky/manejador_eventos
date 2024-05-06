@@ -1,4 +1,5 @@
 class Event {
+  String id;
   final String nameEvent;
   final String typeEvent;
   final String description;
@@ -10,6 +11,7 @@ class Event {
   final String owner;
 
   Event({
+    required this.id,
     required this.nameEvent,
     required this.typeEvent,
     required this.description,
@@ -23,6 +25,7 @@ class Event {
 
   Map<String, dynamic> toMap() {
     return {
+      'id': id,
       'nameEvent': nameEvent,
       'typeEvent': typeEvent,
       'description': description,
@@ -38,6 +41,7 @@ class Event {
 
   factory Event.fromMap(Map<String, dynamic> data) {
     return Event(
+      id:  data['id']?? 'non',
       nameEvent: data['nameEvent'],
       typeEvent: data['typeEvent'],
       description: data['description'],

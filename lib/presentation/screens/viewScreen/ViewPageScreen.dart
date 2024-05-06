@@ -18,7 +18,7 @@ class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
   @override
   void initState() {
     super.initState();
-    ref.read(eventProvider.notifier).fetchEvents(); // fetch events when the page is initialized
+    ref.read(eventProvider.notifier).fetchEvents();
   }
   
   @override

@@ -23,7 +23,15 @@ class EventNotifier extends Notifier<List<Event>> {
 
 
   Future<void> createEvent(Event event) async {
-    await _eventController.createEvent(event);
+    final documentId = await _eventController.createEvent(event);
+    event.id = documentId; 
     state = [...state, event];
   }
+
+
+  Future<void> updateEvent(Event event) async {
+    await _eventController.updateEvent(event);
+    await fetchEvents();
+  }
+
 }

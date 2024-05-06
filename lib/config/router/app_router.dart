@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/screens/editEventScreen/EditEventScreen.dart';
 import 'package:manejador_eventos/presentation/screens/screens.dart';
 import 'package:manejador_eventos/presentation/screens/viewScreen/ViewPageScreen.dart';
 final appRouter = GoRouter(routes:
@@ -27,4 +29,11 @@ final appRouter = GoRouter(routes:
     path: '/new-user',
     builder: (context, state) => const RegistrationPage(),
   ),
+  GoRoute(
+      path: '/edit-event',
+      builder: (context, state) {
+      final event = state.extra as Event;
+      return EditEventScreen(event: event);
+  },
+    ),
 ]);
