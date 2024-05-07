@@ -53,7 +53,7 @@ class MenuPage extends ConsumerWidget {
             height: sizedBoxHeight,
           ),
             ListTile(
-            title: const Text('Editar eventos'),
+            title: const Text('Eventos que asistiré'),
             subtitle: const Text('proximamente'),
             tileColor: Colors.orange,
             onTap:() => context.go('/view-event'),
