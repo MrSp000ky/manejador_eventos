@@ -31,6 +31,9 @@ class _LoginFormState extends State<RegisterForm> {
           User_Input(
             onChanged: (value) => username = value,
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Email_Input(
             onChanged: (value) => email = value,
           ),
