@@ -42,10 +42,7 @@ class EventNotifier extends Notifier<List<Event>> {
       if (event.availability > 0) {
         event.availability--;
         await _eventController.joinEvent(event, username);
-        await _firestore.collection('user-event').doc('${event.id}-${event.owner}').set({
-          'username': username,
-          'eventId': event.id,
-        });
+        
         return true;
       } else {
         return false;
