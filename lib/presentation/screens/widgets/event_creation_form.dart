@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:manejador_eventos/models/event_model.dart';
@@ -82,7 +84,8 @@ class _MyWidgetState extends ConsumerState<EventCreationForm> {
                     hourStar: hourStar,
                     hourEnd: hourEnd,
                     capacity: capacity,
-                    owner: user?.username ?? ''
+                    owner: user?.username ?? '',
+                    availability: int.parse(capacity)
                     
                   );
                   widget.onCreate(event);

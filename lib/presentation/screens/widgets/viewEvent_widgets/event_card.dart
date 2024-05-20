@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/providers/event_provider.dart';
 
-class EventoCard extends StatelessWidget {
+class EventoCard extends ConsumerStatefulWidget {
   final Event evento;
-
   const EventoCard({super.key, required this.evento});
 
-   @override
+  @override
+  _EventoCardState createState() => _EventoCardState();
+}
+
+class _EventoCardState extends ConsumerState<EventoCard> {
+  @override
   Widget build(BuildContext context) {
+
     return Card(
       color: const Color.fromARGB(255, 255, 220, 220),
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -29,32 +36,53 @@ class EventoCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  evento.nameEvent,
+                  widget.evento.nameEvent,
                   style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
-                Text('Tipo: ${evento.typeEvent}'),
+                Text('Tipo: ${widget.evento.typeEvent}'),
                 const SizedBox(height: 4),
-                Text('Descripción: ${evento.description}'),
+                Text('Descripción: ${widget.evento.description}'),
                 const SizedBox(height: 4),
-                Text('Ubicación: ${evento.location}'),
+                Text('Ubicación: ${widget.evento.location}'),
                 const SizedBox(height: 4),
-                Text('Fecha: ${evento.date}'),
+                Text('Fecha: ${widget.evento.date}'),
                 const SizedBox(height: 4),
-                Text('Hora de inicio: ${evento.hourStar}'),
+                Text('Hora de inicio: ${widget.evento.hourStar}'),
                 const SizedBox(height: 4),
-                Text('Hora de fin: ${evento.hourEnd}'),
+                Text('Hora de fin: ${widget.evento.hourEnd}'),
                 const SizedBox(height: 4),
-                Text('Capacidad: ${evento.capacity}  personas.'),
+                Text('Capacidad: ${widget.evento.capacity}  personas.'),
+                const SizedBox(height: 4),
+                Text('Vacantes: ${widget.evento.availability}  personas.'),
                 const SizedBox(height: 16),
-                Text('Owner: ${evento.owner}'),
+                Text('Owner: ${widget.evento.owner}'),
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
-                    context.go('/edit-event', extra: evento);
+                    context.go('/edit-event', extra: widget.evento);
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text('Editar evento'),
+                ),
+                 ElevatedButton.icon(
+                  onPressed: () async {
+                    final availability = await ref.read(eventProvider.notifier).joinEvent(widget.evento);
+
+                    if (availability) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Se unió al evento exitosamente :)')),
+                      );
+                      context.go('/menu-page');
+                    }else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('No se puede unir a ese Evento :(')),
+                      );
+                    }
+
+                  },
+                  icon: const Icon(Icons.add),
+                  label: const Text('Unirse al evento'),
                 ),
               ],
             ),

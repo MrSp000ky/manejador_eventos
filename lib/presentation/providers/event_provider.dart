@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:manejador_eventos/controller/event_controller/eventController.dart';
 import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
+
 
 final eventProvider = NotifierProvider<EventNotifier, List<Event>>(EventNotifier.new);
 
@@ -33,5 +35,26 @@ class EventNotifier extends Notifier<List<Event>> {
     await _eventController.updateEvent(event);
     await fetchEvents();
   }
+
+  Future<bool> joinEvent(Event event) async {
+    final username = ref.read(authProvider.notifier).currentUser?.username;
+    try {
+      if (event.availability > 0) {
+        event.availability--;
+        await _eventController.joinEvent(event, username);
+        await _firestore.collection('user-event').doc('${event.id}-${event.owner}').set({
+          'username': username,
+          'eventId': event.id,
+        });
+        return true;
+      } else {
+        return false;
+      }
+    // ignore: empty_catches
+    } catch (e) {
+    }
+    return false;
+  }
+
 
 }

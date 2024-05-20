@@ -8,6 +8,7 @@ class Event {
   final String hourStar;
   final String hourEnd;
   final String capacity;
+  late int availability;
   final String owner;
 
   Event({
@@ -19,6 +20,7 @@ class Event {
     required this.date,
     required this.hourStar,
     required this.hourEnd,
+    required this.availability,
     required this.capacity,
     required this.owner
   });
@@ -34,6 +36,7 @@ class Event {
       'hourStar': hourStar,
       'hourEnd': hourEnd,
       'capacity': capacity,
+      'availability': availability,
       'owner': owner,
     };
   }
@@ -50,7 +53,8 @@ class Event {
       hourStar: data['hourStar'],
       hourEnd: data['hourEnd'],
       capacity: data['capacity'].toString(),
-      owner: data['owner']?? 'Not Registered',
+      owner: data['owner']?? 'Not Registered', 
+      availability: data['availability']?? 0,
     );
   }
 

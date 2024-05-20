@@ -101,6 +101,7 @@ class _EditEventScreenState extends ConsumerState<EditEventScreen> {
                       hourEnd: eventHourEnd.isEmpty? _event.hourEnd : eventHourEnd,
                       capacity: eventCapacity.isEmpty? _event.capacity : eventCapacity,
                       owner: _event.owner,
+                      availability: _event.availability,
                       );
                       ref.read(eventProvider.notifier).updateEvent(updatedEvent);
                       context.go('/view-event');
