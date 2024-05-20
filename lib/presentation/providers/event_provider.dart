@@ -23,6 +23,35 @@ class EventNotifier extends Notifier<List<Event>> {
     state = events;
   }
 
+    Future<void> fetchMyEvents() async {
+    final currentUser = ref.read(authProvider)?.username;
+    if (currentUser == null) {
+      return;
+    }
+    final eventsRef = _firestore.collection('events');
+    final myEvents = await eventsRef.where('owner', isEqualTo: currentUser).get();
+    final events = myEvents.docs.map((doc) => Event.fromMap(doc.data())).toList();
+    state = events;
+  }
+
+    Future<void> fetchJoinedEvents() async {
+    final currentUser = ref.read(authProvider)?.username;
+    if (currentUser == null) {
+      return;
+    }
+    final userEventsRef = _firestore.collection('user-event');
+    final joinedEvents = await userEventsRef
+        .where('username', isEqualTo: currentUser)
+        .get();
+    final eventIds = joinedEvents.docs.map((doc) => doc.data()['eventId'] as String).toSet();
+    
+    final eventsRef = _firestore.collection('events');
+    final joinedEventsSnapshot = await eventsRef.where(FieldPath.documentId, whereIn: eventIds.toList()).get();
+    final events = joinedEventsSnapshot.docs.map((doc) => Event.fromMap(doc.data())).toList();
+    state = events;
+  }
+
+
 
   Future<void> createEvent(Event event) async {
     final documentId = await _eventController.createEvent(event);
@@ -42,7 +71,7 @@ class EventNotifier extends Notifier<List<Event>> {
       if (event.availability > 0) {
         event.availability--;
         await _eventController.joinEvent(event, username);
-        
+
         return true;
       } else {
         return false;

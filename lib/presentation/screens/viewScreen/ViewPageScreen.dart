@@ -15,6 +15,8 @@ class ViewPageScreen extends ConsumerStatefulWidget {
 
 class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
 
+  String _viewType = 'All Events';
+
   @override
   void initState() {
     super.initState();
@@ -24,6 +26,7 @@ class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
   @override
   Widget build(BuildContext context) {
   final events = ref.watch(eventProvider);
+
   return SafeArea(
     child: Scaffold(
       appBar: AppBar(
@@ -31,7 +34,36 @@ class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
         foregroundColor: Colors.white,
         title: const Text("Ver Eventos"),
         centerTitle: true,
-      ),
+       actions: [
+            DropdownButton<String>(
+              value: _viewType,
+              onChanged: (value) {
+                setState(() {
+                  _viewType = value!;
+                  if (value == 'My Events') {
+                    ref.read(eventProvider.notifier).fetchMyEvents();
+                  } else if(value == 'All Events') {
+                    ref.read(eventProvider.notifier).fetchEvents();
+                  }else{
+                    ref.read(eventProvider.notifier).fetchJoinedEvents();
+                  }
+                });
+              },
+              items: const [
+                DropdownMenuItem(
+                  value: 'All Events',
+                  child: Text('Todos los eventos.'),
+                ),
+                DropdownMenuItem(value: 'My Events',
+                  child: Text('Mis Eventos.'),
+                ),
+                DropdownMenuItem(value: 'Attending Events',
+                  child: Text('Evento que asistire.'),
+                ),
+              ],
+            ),
+          ],
+        ),
       body: Center(
         child: ListView.builder(
           itemCount: events.length,
