@@ -44,11 +44,16 @@ class EventNotifier extends Notifier<List<Event>> {
         .where('username', isEqualTo: currentUser)
         .get();
     final eventIds = joinedEvents.docs.map((doc) => doc.data()['eventId'] as String).toSet();
-    
-    final eventsRef = _firestore.collection('events');
-    final joinedEventsSnapshot = await eventsRef.where(FieldPath.documentId, whereIn: eventIds.toList()).get();
-    final events = joinedEventsSnapshot.docs.map((doc) => Event.fromMap(doc.data())).toList();
-    state = events;
+    if (eventIds.isEmpty) {
+      state = [];
+    }else{
+
+      final eventsRef = _firestore.collection('events');
+      final joinedEventsSnapshot = await eventsRef.where(FieldPath.documentId, whereIn: eventIds.toList()).get();
+      final events = joinedEventsSnapshot.docs.map((doc) => Event.fromMap(doc.data())).toList();
+      state = events;
+
+    }
   }
 
 

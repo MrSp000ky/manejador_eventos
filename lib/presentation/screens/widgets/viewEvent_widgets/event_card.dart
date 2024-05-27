@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:manejador_eventos/models/event_model.dart';
+import 'package:manejador_eventos/presentation/providers/auth_provider.dart';
 import 'package:manejador_eventos/presentation/providers/event_provider.dart';
 
 class EventoCard extends ConsumerStatefulWidget {
@@ -60,7 +61,13 @@ class _EventoCardState extends ConsumerState<EventoCard> {
                 const SizedBox(height: 16),
                 ElevatedButton.icon(
                   onPressed: () {
-                    context.go('/edit-event', extra: widget.evento);
+                    if (ref.read(authProvider.notifier).currentUser?.username == widget.evento.owner) {
+                      context.go('/edit-event', extra: widget.evento);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Solo el propietario del evento puede editar')),
+                      );
+                    }
                   },
                   icon: const Icon(Icons.edit),
                   label: const Text('Editar evento'),

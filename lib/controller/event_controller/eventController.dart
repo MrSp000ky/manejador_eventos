@@ -20,7 +20,7 @@ class EventController {
       await _firebaseFirestore.collection('events').doc(event.id).update(event.toMap()).catchError((e) {
       throw Exception('Error updating event: $e');
   });
-    await _firebaseFirestore.collection('user-event').doc('${event.id}-${event.owner}').set({
+    await _firebaseFirestore.collection('user-event').doc('${event.id}-$username').set({
     'username': username,
     'eventId': event.id,
   });

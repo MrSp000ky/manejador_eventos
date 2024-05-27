@@ -65,12 +65,14 @@ class _ViewPageScreen extends ConsumerState<ViewPageScreen>{
           ],
         ),
       body: Center(
-        child: ListView.builder(
-          itemCount: events.length,
-          itemBuilder: (context, index) {
-            return EventoCard(evento: events[index]);
-          },
-        ),
+          child: events.isEmpty
+              ? const Text("No hay Eventos en esta categoria :( \n¡Crea y Unete a Eventos!" , textAlign: TextAlign.center,)
+              : ListView.builder(
+                  itemCount: events.length,
+                  itemBuilder: (context, index) {
+                    return EventoCard(evento: events[index]);
+                  },
+                ),
       ),
       floatingActionButton: FloatingActionButton(
             tooltip: "Regresar al Menu",
